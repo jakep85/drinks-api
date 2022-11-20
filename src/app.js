@@ -8,33 +8,33 @@ searchField.addEventListener('keydown', (event) => {
 const searchButton = document.querySelector('button');
 searchButton.addEventListener('click', searchDrink);
 
+// Search Cocktail DB for drink
 async function searchDrink() {
+  // Check if no value
   const searchfieldValue = searchField.value.trim();
-
   if (!searchfieldValue) {
     alert('Please enter a search value');
     return;
   }
 
+  // Fetch data
   const endpoint = new URL(
     `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchfieldValue}`
   );
-
   const response = await fetch(endpoint);
   const data = await response.json();
+
+  // If nothing found return and clear field
   if (!data.drinks) {
     alert('Sorry nothing was found for that');
     changeAttribute(searchField, '');
     return;
   }
-  console.log(data.drinks);
-  const drinkList = data.drinks;
 
   // TODO: make this a <template> in HTML with some hooks
   const displayDrinks = (list) => {
     const drinkListEl = document.getElementById('drink-list');
     drinkListEl.innerHTML = '';
-    console.log('list length', list.length);
     list.forEach((drink, index) => {
       // Create animation delay per drink card
       const li = document.createElement('li');
@@ -86,9 +86,12 @@ async function searchDrink() {
     drinkListEl.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Display the drinks
+  const drinkList = data.drinks;
   displayDrinks(drinkList);
 }
 
+// Change attribute helper
 const changeAttribute = (element, value, attribute = 'value') => {
   element.setAttribute(`${attribute}`, '');
   element.setAttribute(`${attribute}`, value);
@@ -97,13 +100,16 @@ const changeAttribute = (element, value, attribute = 'value') => {
   }
 };
 
+// TODO: show better errors
 const showError = () => {};
 
+// Populate search field from preload 'try things like:' buttons
 const populateSearchField = (searchText) => {
   changeAttribute(searchField, searchText);
   searchDrink();
 };
 
+// Generate listeners for sample list and pass to populate binding elText as arg
 const sampleList = () => {
   const list = document.getElementById('sample-list');
   list.childNodes.forEach((el) => {
