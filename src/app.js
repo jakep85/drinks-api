@@ -1,3 +1,4 @@
+// TODO: store drinks object in local storage, if same search check localstorage first before fetching API
 const searchField = document.getElementById('drink-search');
 searchField.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
@@ -29,12 +30,13 @@ async function searchDrink() {
   console.log(data.drinks);
   const drinkList = data.drinks;
 
-  // TOD: make this a <template> in HTML with some hooks
+  // TODO: make this a <template> in HTML with some hooks
   const displayDrinks = (list) => {
     const drinkListEl = document.getElementById('drink-list');
     drinkListEl.innerHTML = '';
-    // Create the drink cards for each tiem
-    list.forEach((drink) => {
+    console.log('list length', list.length);
+    list.forEach((drink, index) => {
+      // Create animation delay per drink card
       const li = document.createElement('li');
       li.innerHTML = `
       <h2 class='text-2xl font-bold my-3 mx-4 text-slate-700'>${drink.strDrink}</h2>  
@@ -50,7 +52,8 @@ async function searchDrink() {
       </div>
       `;
       li.classList =
-        'rounded-xl shadow-lg flex flex-col overflow-hidden border border-slate-200';
+        'opacity-0 rounded-xl shadow-lg flex flex-col overflow-hidden border border-slate-200 animate-[fadeup_0.3s_ease-in-out]';
+      li.id = drink.idDrink;
       drinkListEl.append(li);
 
       // Get ingredient list
@@ -69,9 +72,15 @@ async function searchDrink() {
       const inglistWrapper = document.getElementById(
         `${drink.idDrink}-ingredients`
       );
-      // const inglistUL = inglistWrapper.getElementsByClassName('ul');
-      // inglistUL.classList = 'list-disc';
       inglistWrapper.append(ingList);
+      const eachElement = document.getElementById(drink.idDrink);
+      // Adding staggered animation delay for each drink card
+      eachElement.style = `animation-delay: 0.${index}s`;
+      // Removing the tailwind opacity class with staggered timeout
+      const timeMS = index * 100 + 100;
+      setTimeout(() => {
+        eachElement.classList.remove('opacity-0');
+      }, timeMS);
     });
   };
 
