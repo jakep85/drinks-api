@@ -32,15 +32,40 @@ async function searchDrink() {
   const displayDrinks = (list) => {
     const drinkListEl = document.getElementById('drink-list');
     drinkListEl.innerHTML = '';
+    // Create the drink cards for each tiem
     list.forEach((drink) => {
       const li = document.createElement('li');
       li.innerHTML = `
-        <h2 class='text-2xl font-bold mt-5 mb-3'>${drink.strDrink}</h2>
-        <img src="${drink.strDrinkThumb}">
-        <h3>Instructions</h3>
-        <p>${drink.strInstructions}</p>
+      <h2 class='text-2xl font-bold px-3 mt-5 mb-3 text-slate-700'>${drink.strDrink}</h2>  
+      <div class='flex'>
+        <div class='w-1/2'>
+          <img src="${drink.strDrinkThumb}">
+        </div>
+        <div id='${drink.idDrink}-ingredients' class='px-3 w-1/2'></div>
+      </div>
+      <div>
+        <h3 class='text-lg leading-4 font-semibold text-slate-700 mb-2'>Instructions</h3>
+        <p class='text-slate-700'>${drink.strInstructions}</p>
+      </div>
       `;
+      li.classList =
+        'rounded-xl shadow-md flex flex-col overflow-hidden border-2 border-slate-200';
       drinkListEl.append(li);
+
+      // Get ingredient list
+      const ingList = document.createElement('ul');
+      let itemList = '';
+      for (let i = 1; i <= 15; i++) {
+        if (eval('drink.strIngredient' + i)) {
+          itemList += `
+            <li>${eval('drink.strIngredient' + i)}</li>
+          `;
+        }
+      }
+      console.log(ingList);
+      ingList.innerHTML = itemList;
+      const inglistEl = document.getElementById(`${drink.idDrink}-ingredients`);
+      inglistEl.append(ingList);
     });
   };
 

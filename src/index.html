@@ -26,9 +26,9 @@
               id="drink-search"
               type="text"
               placeholder="Margarita"
-              class="bg-slate-300 rounded-full text-xl font-semibold text-slate-700 border-none px-3 py-2"
+              class="bg-slate-300 rounded-full text-xl font-semibold text-slate-700 border-none px-4 py-2"
             />
-            <button id="search-button" class="-ml-10 relative z-1">
+            <button id="search-button" class="-ml-11 relative z-1">
               <span class="sr-only">Search</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -119,8 +119,19 @@
         </div>
       </div>
     </header>
-    <main class="bg-white rounded-b-2xl border-4 border-black w-3/4 mx-auto">
-      <ul id="drink-list"></ul>
+    <main class="bg-white rounded-b-2xl w-3/4 mx-auto px-10 pb-10 mb-10">
+      <ul id="drink-list" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-3"></ul>
     </main>
+    <footer class="text-center mb-5">
+      <p class="text-slate-500 opacity-20">
+        © Copyright Sandypixel Inc.&nbsp;
+        <script>
+          // Current date
+          today = new Date();
+          y0 = today.getFullYear();
+          document.write(y0);
+        </script>
+      </p>
+    </footer>
   </body>
 </html>
