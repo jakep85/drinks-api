@@ -29,6 +29,7 @@ async function searchDrink() {
   console.log(data.drinks);
   const drinkList = data.drinks;
 
+  // TOD: make this a <template> in HTML with some hooks
   const displayDrinks = (list) => {
     const drinkListEl = document.getElementById('drink-list');
     drinkListEl.innerHTML = '';
@@ -36,20 +37,20 @@ async function searchDrink() {
     list.forEach((drink) => {
       const li = document.createElement('li');
       li.innerHTML = `
-      <h2 class='text-2xl font-bold px-3 mt-5 mb-3 text-slate-700'>${drink.strDrink}</h2>  
-      <div class='flex'>
-        <div class='w-1/2'>
+      <h2 class='text-2xl font-bold my-3 mx-4 text-slate-700'>${drink.strDrink}</h2>  
+      <div class='flex flex-col md:flex-row'>
+        <div class='md:w-1/2'>
           <img src="${drink.strDrinkThumb}">
         </div>
-        <div id='${drink.idDrink}-ingredients' class='px-3 w-1/2'></div>
+        <div id='${drink.idDrink}-ingredients' class='p-5 pb-2 md:px-3 md:py-0 w-1/2'></div>
       </div>
-      <div>
+      <div class='p-5'>
         <h3 class='text-lg leading-4 font-semibold text-slate-700 mb-2'>Instructions</h3>
         <p class='text-slate-700'>${drink.strInstructions}</p>
       </div>
       `;
       li.classList =
-        'rounded-xl shadow-md flex flex-col overflow-hidden border-2 border-slate-200';
+        'rounded-xl shadow-lg flex flex-col overflow-hidden border border-slate-200';
       drinkListEl.append(li);
 
       // Get ingredient list
@@ -62,10 +63,15 @@ async function searchDrink() {
           `;
         }
       }
-      console.log(ingList);
       ingList.innerHTML = itemList;
-      const inglistEl = document.getElementById(`${drink.idDrink}-ingredients`);
-      inglistEl.append(ingList);
+      ingList.classList = 'list-disc ml-5 text-slate-700 text-lg';
+      // Adding unique drink ID
+      const inglistWrapper = document.getElementById(
+        `${drink.idDrink}-ingredients`
+      );
+      // const inglistUL = inglistWrapper.getElementsByClassName('ul');
+      // inglistUL.classList = 'list-disc';
+      inglistWrapper.append(ingList);
     });
   };
 
