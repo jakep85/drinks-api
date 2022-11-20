@@ -82,6 +82,8 @@ async function searchDrink() {
         eachElement.classList.remove('opacity-0');
       }, timeMS);
     });
+    // const firstLi = drinkListEl.getElementsByTagName('li');
+    drinkListEl.scrollIntoView({ behavior: 'smooth' });
   };
 
   displayDrinks(drinkList);
