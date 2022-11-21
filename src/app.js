@@ -37,12 +37,13 @@ async function searchDrink() {
     drinkListEl.innerHTML = '';
     list.forEach((drink, index) => {
       // Create animation delay per drink card
+      // <img src="${drink.strDrinkThumb}" class='relative z-10'>
       const li = document.createElement('li');
       li.innerHTML = `
       <h2 class='text-2xl font-bold my-3 mx-4 text-slate-700'>${drink.strDrink}</h2>  
       <div class='flex flex-col md:flex-row'>
-        <div class='md:w-1/2'>
-          <img src="${drink.strDrinkThumb}">
+        <div class='md:w-1/2 relative after:z-0 after:absolute after:left-[calc(50%_-_20px)] after:top-[calc(50%_-_20px)] after:w-10 after:h-10 after:rounded-full after:border-4 after:border-slate-500 after:border-t-transparent after:animate-[spinner_0.5s_ease-in-out_infinite]'>
+          <img src="${drink.strDrinkThumb}" class='relative z-10 object-cover w-full h-full'>
         </div>
         <div id='${drink.idDrink}-ingredients' class='p-5 pb-2 md:px-3 md:py-0 w-1/2'></div>
       </div>
