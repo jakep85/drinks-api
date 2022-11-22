@@ -24,17 +24,12 @@ TODO
 
 ### Nov 21st 2022
 
-**Localstorage complete**
-
-Now utilizing 'localStorage' to add previously searched items and opt to retrieve locally instead of requesting from the API again.
+**Localstorage complete**: Now utilizing 'localStorage' to add previously searched items and opt to retrieve locally instead of requesting from the API again.
 
 ### Nov 22st 2022
 
-**HTML <template> usage complete**
-HTML `<template>` is being used from the DOM to minimize the amount of HTML as strings in JS. Using `importNode` with "true" for deep import. Document fragments manipulated before appending to DOM.
+**HTML template usage complete**: HTML `<template>` is being used from the DOM to minimize the amount of HTML as strings in JS. Using `importNode` with "true" for deep import. Document fragments manipulated before appending to DOM.
 
-**Added favicon package**
-Added a packge with snail icon for favicon on different devices
+**Added favicon package**: Added a packge with snail icon for favicon on different devices
 
-**Updated HTML minify config**
-Updated HTML minify config keep tag whitespace and full doctype to pass W3C validation
+**Updated HTML minify config**: Updated HTML minify config keep tag whitespace and full doctype to pass W3C validation
