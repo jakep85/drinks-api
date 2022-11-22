@@ -1,32 +1,23 @@
 // TODO: store drinks object in local storage, if same search check localstorage first before fetching API
 const searchField = document.getElementById('drink-search');
-const searchfieldValue = searchField.value.trim();
 const searchButton = document.querySelector('button');
-let drinkList = [];
-let drinkListToDisplay = [];
 
 // Search Cocktail DB for drink
-function searchDrink(query) {
-  // Check if no value
-  if (!query) {
+async function searchDrink() {
+  // Check if no value;
+  const searchfieldValue = searchField.value.trim();
+  if (!searchfieldValue) {
     alert('Please enter a search value');
     return;
   }
 
-  // // If local storage is NOT empty and query exists
-  // if (!localStorage.length === 0) {
-  //   alert('Please enter a search value');
-  //   return;
-  // }
-
-  async function fetchRemoteData(query) {
+  async function fetchRemoteData() {
     // Fetch data
     const endpoint = new URL(
-      `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}`
+      `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchfieldValue}`
     );
     const response = await fetch(endpoint);
     const data = await response.json();
-    drinkList = [...data.drinks];
 
     // If nothing found return and clear field
     if (!data.drinks) {
@@ -37,24 +28,30 @@ function searchDrink(query) {
 
     // Add to localStorage
     // localStorage.clear();
-    // localStorage.setItem(query, JSON.stringify(drinkList));
-    // console.log(`added ${query} to localstorage`);
-    // console.log(localStorage);
+    localStorage.setItem(searchfieldValue, JSON.stringify(data.drinks));
+    console.log(
+      `added ${searchfieldValue} to localstorage for next time that search comes up`
+    );
+    console.log(localStorage);
+
+    return data.drinks;
   }
 
-  fetchRemoteData(query);
-
+  // fetchRemoteData();
   // TODO: make this a <template> in HTML with some hooks
   function displayDrinks(list) {
+    if (!list) {
+      return;
+    }
     const drinkListEl = document.getElementById('drink-list');
     drinkListEl.innerHTML = '';
-
+    console.log(list);
     list.forEach((drink, index) => {
       // Create animation delay per drink card
       // <img src="${drink.strDrinkThumb}" class='relative z-10'>
       const li = document.createElement('li');
       li.innerHTML = `
-      <h2 class='text-2xl font-bold my-3 mx-4 text-slate-700'>${drink.strDrink}</h2>  
+      <h2 class='text-2xl font-bold my-3 mx-4 text-slate-700'>${drink.strDrink}</h2>
       <div class='flex flex-col md:flex-row'>
         <div class='md:w-1/2 relative after:z-0 after:absolute after:left-[calc(50%_-_20px)] after:top-[calc(50%_-_20px)] after:w-10 after:h-10 after:rounded-full after:border-4 after:border-slate-500 after:border-t-transparent after:animate-[spinner_0.5s_ease-in-out_infinite]'>
           <img src="${drink.strDrinkThumb}" class='relative z-10 object-cover w-full h-full'>
@@ -101,9 +98,26 @@ function searchDrink(query) {
     drinkListEl.scrollIntoView({ behavior: 'smooth' });
   }
 
-  console.log(drinkList);
-  // Display the drinks
-  displayDrinks(drinkList);
+  // Check for local drinks
+  if (localStorage.getItem(`${searchfieldValue}`)) {
+    console.log('----------------------------------');
+    console.log(`Yes ${searchfieldValue} was found in local storage`);
+    console.log(localStorage);
+    const localDrinks = JSON.parse(localStorage.getItem(`${searchfieldValue}`));
+    // Display the drinks with remote data
+    displayDrinks(localDrinks);
+    console.log('displayed drinklist with LOCAL data!');
+  } else {
+    console.log(
+      `No, ${searchfieldValue} was not found in localStorage, better fetch API`
+    );
+    const remoteDrinks = await fetchRemoteData();
+    if (remoteDrinks) {
+      // Display the drinks with remote data
+      displayDrinks(remoteDrinks);
+      console.log('displayed drinklist with REMOTE data!');
+    }
+  }
 }
 
 // Change attribute helper
@@ -121,7 +135,7 @@ const showError = () => {};
 // Populate search field from preload 'try things like:' buttons
 const populateSearchField = (searchText) => {
   changeAttribute(searchField, searchText);
-  searchDrink(searchText);
+  searchDrink();
 };
 
 // Generate listeners for sample list and pass to populate binding elText as arg
@@ -135,19 +149,10 @@ const sampleList = () => {
 
 sampleList();
 
-function getInputValue(theText) {
-  console.dir(searchField);
-  console.log(searchfieldValue);
-  console.log(theText);
-}
-
 // Add listeners
 searchField.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
-    searchDrink(searchfieldValue);
+    searchDrink();
   }
 });
-searchButton.addEventListener(
-  'click',
-  getInputValue.bind(null, searchfieldValue)
-);
+searchButton.addEventListener('click', searchDrink);
