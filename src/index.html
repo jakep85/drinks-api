@@ -9,12 +9,8 @@
     <link rel="stylesheet" href="/build/main.css" />
   </head>
   <body class="bg-gradient-to-r from-green-200 to-orange-200 flex flex-col">
-    <header
-      class="flex flex-col bg-white w-11/12 sm:w-3/4 mx-auto mt-20 rounded-t-2xl"
-    >
-      <div
-        class="flex flex-col items-center md:flex-row md:justify-between p-10"
-      >
+    <header class="flex flex-col bg-white w-11/12 sm:w-3/4 mx-auto mt-20 rounded-t-2xl">
+      <div class="flex flex-col items-center md:flex-row md:justify-between p-10">
         <div>
           <h1 class="text-3xl text-slate-700 font-bold mr-5">
             <img src="images/csnail.svg" alt="Cocktail Snail Logo" />
@@ -49,9 +45,7 @@
             </button>
           </fieldset>
           <div class="text-center md:text-right">
-            <p class="mx-2 mb-3 text-xl font-semibold text-slate-700">
-              Try things like:
-            </p>
+            <p class="mx-2 mb-3 text-xl font-semibold text-slate-700">Try things like:</p>
             <ul id="sample-list" class="flex-wrap [&>li]:inline-flex">
               <li>
                 <button
@@ -121,13 +115,8 @@
         </div>
       </div>
     </header>
-    <main
-      class="bg-white rounded-b-2xl w-11/12 sm:w-3/4 mx-auto px-5 sm:px-10 pb-10 mb-10"
-    >
-      <ul
-        id="drink-list"
-        class="grid md:grid-cols-2 xl:grid-cols-3 gap-8 sm:gap-5"
-      ></ul>
+    <main class="bg-white rounded-b-2xl w-11/12 sm:w-3/4 mx-auto px-5 sm:px-10 pb-10 mb-10">
+      <ul id="drink-list" class="grid md:grid-cols-2 xl:grid-cols-3 gap-8 sm:gap-5"></ul>
     </main>
     <footer class="text-center mb-5">
       <p class="text-slate-500 opacity-20">
@@ -140,5 +129,22 @@
         </script>
       </p>
     </footer>
+    <template id="drink-card-template">
+      <li id="drink-card-element">
+        <h2 id="drink-card-title" class="text-2xl font-bold my-3 mx-4 text-slate-700"></h2>
+        <div class="flex flex-col md:flex-row">
+          <div
+            class="md:w-1/2 relative after:z-0 after:absolute after:left-[calc(50%_-_20px)] after:top-[calc(50%_-_20px)] after:w-10 after:h-10 after:rounded-full after:border-4 after:border-slate-500 after:border-t-transparent after:animate-[spinner_0.5s_ease-in-out_infinite]"
+          >
+            <img id="drink-card-img" class="relative z-10 object-cover w-full h-full" />
+          </div>
+          <div id="drink-card-ingredients" class="p-5 pb-2 md:px-3 md:py-0 w-1/2"></div>
+        </div>
+        <div class="p-5">
+          <h3 class="text-lg leading-4 font-semibold text-slate-700 mb-2">Instructions</h3>
+          <p id="drink-card-instructions" class="text-slate-700"></p>
+        </div>
+      </li>
+    </template>
   </body>
 </html>
