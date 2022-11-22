@@ -25,4 +25,5 @@ WIP for
 ### Nov 21st 2022
 
 _Localstorage complete_
+
 Next update to this project will be to utilize 'localStorage' to add previously searched items and opt to retrieve locally instead of requesting from the API again.
