@@ -15,6 +15,14 @@ In the package.json there are a number of scripts
 - For local dev faster to have [tailwind installed globally](https://tailwindcss.com/docs/installation) and using `npx tailwindcss -i ./src/main.css -o ./build/main.css --watch`
 - Or you can use the `npm run watch`
 
-## Next version
+## Updates
 
+WIP for
+
+- card template in HTML using importNode
+- better error messages (red input field with message underneath)
+
+### Nov 21st 2022
+
+_Localstorage complete_
 Next update to this project will be to utilize 'localStorage' to add previously searched items and opt to retrieve locally instead of requesting from the API again.
