@@ -101,15 +101,29 @@ async function searchDrink() {
   // Check for local drinks
   if (localStorage.getItem(`${searchfieldValue}`)) {
     console.log('----------------------------------');
-    console.log(`Yes ${searchfieldValue} was found in local storage`);
+    console.log(`
+██    ██ ███████ ███████ 
+ ██  ██  ██      ██      
+  ████   █████   ███████ 
+   ██    ██           ██ 
+   ██    ███████ ███████                          
+    `);
+    console.log(`YAAAAS ${searchfieldValue} was found in local storage`);
     console.log(localStorage);
     const localDrinks = JSON.parse(localStorage.getItem(`${searchfieldValue}`));
     // Display the drinks with remote data
     displayDrinks(localDrinks);
     console.log('displayed drinklist with LOCAL data!');
   } else {
+    console.log(`
+    ███    ██  ██████  
+    ████   ██ ██    ██ 
+    ██ ██  ██ ██    ██ 
+    ██  ██ ██ ██    ██ 
+    ██   ████  ██████                               
+        `);
     console.log(
-      `No, ${searchfieldValue} was not found in localStorage, better fetch API`
+      `NOOOOO, ${searchfieldValue} was not found in localStorage, better fetch API`
     );
     const remoteDrinks = await fetchRemoteData();
     if (remoteDrinks) {
