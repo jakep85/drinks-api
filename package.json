@@ -4,11 +4,12 @@
   "description": "Use the CocktailDB free API to search for drinks. Preload search from a small list. Using Tailwind for styling",
   "main": "app.js",
   "scripts": {
-    "build": "npm run compile:css && npm run minify:html && npm run uglify:js && npm run imagemin",
+    "build": "npm run compile:css && npm run minify:html && npm run uglify:js && npm run imagemin && npm run copy:favicon",
     "compile:css": "npx postcss src/main.css -o build/main.min.css",
     "uglify:js": "uglifyjs src/app.js -o build/app.min.js -c -m",
     "minify:html": "html-minifier src/index.html -o build/index.html --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true",
     "imagemin": "imagemin src/images/* --out-dir=build/images",
+    "copy:favicon": "copyfiles src/favicon/* build/ -f",
     "watch": "nodemon --watch src -e js,html,css -x \"npm run build\""
   },
   "keywords": [],
@@ -16,6 +17,7 @@
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^10.4.13",
+    "copyfiles": "^2.4.1",
     "cssnano": "^5.1.14",
     "html-minifier": "^4.0.0",
     "imagemin-cli": "^7.0.0",
