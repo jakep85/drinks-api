@@ -11,27 +11,39 @@ async function searchDrink() {
   }
 
   async function fetchRemoteData() {
-    // Fetch data
-    const endpoint = new URL(
-      `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchfieldValue}`
-    );
-    const response = await fetch(endpoint);
-    const data = await response.json();
+    try {
+      // Fetch data
+      const endpoint = new URL(
+        `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchfieldValue}`
+      );
+      // const endpoint = new URL(`https://httpstat.us/500`);
+      const response = await fetch(endpoint);
+      if (!response.ok) {
+        console.error(response.status);
+        alert(`Sorry there was an error of type: ${response.status}`);
+        return;
+      }
+      const data = await response.json();
 
-    // If nothing found return and clear field
-    if (!data.drinks) {
-      alert('Sorry nothing was found for that');
-      changeAttribute(searchField, '');
+      // If nothing found return and clear field
+      if (!data.drinks) {
+        alert('Sorry nothing was found for that');
+        changeAttribute(searchField, '');
+        return;
+      }
+
+      // Add to localStorage
+      // localStorage.clear();
+      localStorage.setItem(searchfieldValue, JSON.stringify(data.drinks));
+      console.log(`added ${searchfieldValue} to localstorage for next time that search comes up`);
+      console.log(localStorage);
+
+      return data.drinks;
+    } catch (error) {
+      console.error(error);
+      alert(`Sorry there was an error: ${error}`);
       return;
     }
-
-    // Add to localStorage
-    // localStorage.clear();
-    localStorage.setItem(searchfieldValue, JSON.stringify(data.drinks));
-    console.log(`added ${searchfieldValue} to localstorage for next time that search comes up`);
-    console.log(localStorage);
-
-    return data.drinks;
   }
 
   // Prev display drinks function
